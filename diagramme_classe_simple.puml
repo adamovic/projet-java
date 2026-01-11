@@ -1,0 +1,161 @@
+@startuml Diagramme de Classe Simple - Gestion de Bibliothèque
+
+skinparam classAttributeIconSize 0
+
+' ===== MODÈLES =====
+class Etudiant {
+    - id : String
+    - nom : String
+    - prenom : String
+    - email : String
+    - telephone : String
+    - emprunts : List<Emprunt>
+    + getId() : String
+    + getNomComplet() : String
+    + getNombreEmpruntsActifs() : int
+}
+
+class Livre {
+    - isbn : String
+    - titre : String
+    - auteur : String
+    - categorie : String
+    - anneePublication : int
+    - nombreExemplairesTotal : int
+    - nombreExemplairesDisponibles : int
+    + getIsbn() : String
+    + estDisponible() : boolean
+    + emprunterExemplaire() : boolean
+    + retournerExemplaire() : boolean
+}
+
+class Emprunt {
+    - id : String
+    - etudiant : Etudiant
+    - livre : Livre
+    - dateEmprunt : Date
+    - dateRetourPrevue : Date
+    - dateRetour : Date
+    + getId() : String
+    + estActif() : boolean
+    + estEnRetard() : boolean
+    + retourner() : boolean
+}
+
+' ===== DAO =====
+class DatabaseConnection {
+    - instance : DatabaseConnection
+    - connection : Connection
+    + getInstance() : DatabaseConnection
+    + getConnection() : Connection
+}
+
+class EtudiantDAO {
+    - dbConnection : DatabaseConnection
+    + findAll() : List<Etudiant>
+    + findById(String) : Etudiant
+    + save(Etudiant)
+    + update(Etudiant)
+    + delete(String)
+}
+
+class LivreDAO {
+    - dbConnection : DatabaseConnection
+    + findAll() : List<Livre>
+    + findByIsbn(String) : Livre
+    + save(Livre)
+    + searchByTitre(String) : List<Livre>
+    + searchByAuteur(String) : List<Livre>
+}
+
+class EmpruntDAO {
+    - dbConnection : DatabaseConnection
+    - etudiantDAO : EtudiantDAO
+    - livreDAO : LivreDAO
+    + findAll() : List<Emprunt>
+    + save(Emprunt)
+    + findActifs() : List<Emprunt>
+    + findEnRetard() : List<Emprunt>
+}
+
+' ===== SERVICES =====
+class EtudiantService {
+    - etudiantDAO : EtudiantDAO
+    + getAllEtudiants() : List<Etudiant>
+    + ajouterEtudiant(Etudiant)
+    + modifierEtudiant(Etudiant)
+}
+
+class LivreService {
+    - livreDAO : LivreDAO
+    + getAllLivres() : List<Livre>
+    + ajouterLivre(Livre)
+}
+
+class EmpruntService {
+    - empruntDAO : EmpruntDAO
+    + creerEmprunt(Emprunt)
+    + retournerLivre(String)
+    + getEmpruntsActifs() : List<Emprunt>
+}
+
+' ===== CONTRÔLEURS =====
+class EtudiantController {
+    - etudiantDAO : EtudiantDAO
+    + handleAjouter()
+    + handleModifier()
+    + handleSupprimer()
+}
+
+class LivreController {
+    - livreDAO : LivreDAO
+    + handleAjouter()
+    + handleModifier()
+}
+
+class EmpruntController {
+    - empruntDAO : EmpruntDAO
+    + handleEmprunter()
+    + handleRetourner()
+}
+
+class RechercheController {
+    - livreDAO : LivreDAO
+    + handleRechercher()
+}
+
+class SceneManager {
+    - instance : SceneManager
+    + getInstance() : SceneManager
+    + showHomeView()
+    + showEtudiantView()
+    + showLivreView()
+}
+
+' ===== RELATIONS =====
+Etudiant "1" *-- "0..*" Emprunt
+Livre "1" *-- "0..*" Emprunt
+
+EtudiantDAO ..> DatabaseConnection
+LivreDAO ..> DatabaseConnection
+EmpruntDAO ..> DatabaseConnection
+EmpruntDAO ..> EtudiantDAO
+EmpruntDAO ..> LivreDAO
+
+EtudiantService ..> EtudiantDAO
+LivreService ..> LivreDAO
+EmpruntService ..> EmpruntDAO
+
+EtudiantController ..> EtudiantDAO
+LivreController ..> LivreDAO
+EmpruntController ..> EmpruntDAO
+RechercheController ..> LivreDAO
+
+EtudiantController ..> SceneManager
+LivreController ..> SceneManager
+EmpruntController ..> SceneManager
+RechercheController ..> SceneManager
+
+@enduml
+
+

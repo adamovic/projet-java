@@ -1,0 +1,11 @@
+isbn,titre,auteur,categorie,anneePublication,nombreExemplairesTotal,nombreExemplairesDisponibles
+978-2-212-09561-0,Java Programming,John Smith,Informatique,2022,5,5
+978-2-212-09562-7,Data Structures,Alice Johnson,Informatique,2021,3,3
+978-2-212-09563-4,Algorithm Design,Bob Wilson,Informatique,2023,4,4
+978-2-212-09564-1,Database Systems,Carol Davis,Informatique,2020,2,2
+978-2-212-09565-8,Web Development,David Brown,Informatique,2023,6,6
+978-2-212-09566-5,Machine Learning,Emma Miller,Informatique,2022,4,4
+978-2-212-09567-2,Calculus I,Frank Garcia,Mathématiques,2021,5,5
+978-2-212-09568-9,Linear Algebra,Grace Martinez,Mathématiques,2022,3,3
+978-2-212-09569-6,Physics Fundamentals,Henry Rodriguez,Physique,2021,4,4
+978-2-212-09570-2,Chemistry Basics,Iris Lopez,Chimie,2022,3,3

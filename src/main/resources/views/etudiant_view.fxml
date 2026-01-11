@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.university.library.controllers.EtudiantController">
+   <top>
+      <HBox style="-fx-background-color: #2c3e50; -fx-padding: 15px;" spacing="10.0">
+         <Button mnemonicParsing="false" onAction="#handleRetour" text="← Accueil" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5px 15px;" />
+         <VBox>
+            <Label text="Gestion des Étudiants" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+         </VBox>
+      </HBox>
+   </top>
+   <center>
+      <VBox spacing="15.0" style="-fx-padding: 20px;">
+         <!-- Formulaire d'ajout/modification -->
+         <HBox spacing="10.0" style="-fx-background-color: #ecf0f1; -fx-padding: 15px; -fx-background-radius: 5px;">
+            <VBox spacing="5.0">
+               <Label text="ID Étudiant:" textFill="#2c3e50" />
+               <TextField fx:id="idField" prefWidth="100.0" promptText="ex: E001" />
+            </VBox>
+            <VBox spacing="5.0">
+               <Label text="Nom:" textFill="#2c3e50" />
+               <TextField fx:id="nomField" prefWidth="120.0" promptText="Nom" />
+            </VBox>
+            <VBox spacing="5.0">
+               <Label text="Prénom:" textFill="#2c3e50" />
+               <TextField fx:id="prenomField" prefWidth="120.0" promptText="Prénom" />
+            </VBox>
+            <VBox spacing="5.0">
+               <Label text="Email:" textFill="#2c3e50" />
+               <TextField fx:id="emailField" prefWidth="150.0" promptText="email@univ.fr" />
+            </VBox>
+            <VBox spacing="5.0">
+               <Label text="Téléphone:" textFill="#2c3e50" />
+               <TextField fx:id="telephoneField" prefWidth="100.0" promptText="06..." />
+            </VBox>
+            <VBox alignment="BOTTOM_LEFT" spacing="5.0">
+               <Button mnemonicParsing="false" onAction="#handleAjouter" text="Ajouter" style="-fx-background-color: #27ae60; -fx-text-fill: white;" />
+               <Button mnemonicParsing="false" onAction="#handleModifier" text="Modifier" style="-fx-background-color: #f39c12; -fx-text-fill: white;" />
+               <Button mnemonicParsing="false" onAction="#handleSupprimer" text="Supprimer" style="-fx-background-color: #e74c3c; -fx-text-fill: white;" />
+            </VBox>
+         </HBox>
+         
+         <!-- Tableau des étudiants -->
+         <TableView fx:id="etudiantTable" prefHeight="300.0" VBox.vgrow="ALWAYS">
+            <columns>
+               <TableColumn fx:id="idColumn" prefWidth="80.0" text="ID" />
+               <TableColumn fx:id="nomColumn" prefWidth="120.0" text="Nom" />
+               <TableColumn fx:id="prenomColumn" prefWidth="120.0" text="Prénom" />
+               <TableColumn fx:id="emailColumn" prefWidth="180.0" text="Email" />
+               <TableColumn fx:id="telephoneColumn" prefWidth="100.0" text="Téléphone" />
+               <TableColumn fx:id="empruntsColumn" prefWidth="100.0" text="Emprunts" />
+            </columns>
+         </TableView>
+         
+         <!-- Boutons de navigation -->
+         <HBox alignment="CENTER_RIGHT" spacing="10.0">
+            <Button mnemonicParsing="false" onAction="#handleRetour" text="Retour Accueil" style="-fx-background-color: #95a5a6; -fx-text-fill: white;" />
+         </HBox>
+      </VBox>
+   </center>
+</BorderPane>

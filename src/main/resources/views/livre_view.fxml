@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.university.library.controllers.LivreController">
+   <top>
+      <HBox style="-fx-background-color: #2c3e50; -fx-padding: 15px;" spacing="10.0">
+         <Button mnemonicParsing="false" onAction="#handleRetour" text="← Accueil" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 5px 15px;" />
+         <VBox>
+            <Label text="Gestion des Livres" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+         </VBox>
+      </HBox>
+   </top>
+   <center>
+      <VBox spacing="15.0" style="-fx-padding: 20px;">
+         <!-- Formulaire d'ajout/modification -->
+         <HBox spacing="10.0" style="-fx-background-color: #ecf0f1; -fx-padding: 15px; -fx-background-radius: 5px;">
+            <VBox spacing="5.0">
+               <Label text="ISBN:" textFill="#2c3e50" />
+               <TextField fx:id="isbnField" prefWidth="120.0" promptText="978-..." />
+            </VBox>
+            <VBox spacing="5.0">
+               <Label text="Titre:" textFill="#2c3e50" />
+               <TextField fx:id="titreField" prefWidth="200.0" promptText="Titre du livre" />
+            </VBox>
+            <VBox spacing="5.0">
+               <Label text="Auteur:" textFill="#2c3e50" />
+               <TextField fx:id="auteurField" prefWidth="150.0" promptText="Nom de l'auteur" />
+            </VBox>
+            <VBox spacing="5.0">
+               <Label text="Catégorie:" textFill="#2c3e50" />
+               <ComboBox fx:id="categorieCombo" prefWidth="120.0" promptText="Catégorie" />
+            </VBox>
+            <VBox spacing="5.0">
+               <Label text="Année:" textFill="#2c3e50" />
+               <TextField fx:id="anneeField" prefWidth="80.0" promptText="2024" />
+            </VBox>
+            <VBox spacing="5.0">
+               <Label text="Exemplaires:" textFill="#2c3e50" />
+               <TextField fx:id="exemplairesField" prefWidth="80.0" promptText="5" />
+            </VBox>
+            <VBox alignment="BOTTOM_LEFT" spacing="5.0">
+               <Button mnemonicParsing="false" onAction="#handleAjouter" text="Ajouter" style="-fx-background-color: #27ae60; -fx-text-fill: white;" />
+               <Button mnemonicParsing="false" onAction="#handleModifier" text="Modifier" style="-fx-background-color: #f39c12; -fx-text-fill: white;" />
+               <Button mnemonicParsing="false" onAction="#handleSupprimer" text="Supprimer" style="-fx-background-color: #e74c3c; -fx-text-fill: white;" />
+            </VBox>
+         </HBox>
+         
+         <!-- Tableau des livres -->
+         <TableView fx:id="livreTable" prefHeight="300.0" VBox.vgrow="ALWAYS">
+            <columns>
+               <TableColumn fx:id="isbnColumn" prefWidth="120.0" text="ISBN" />
+               <TableColumn fx:id="titreColumn" prefWidth="200.0" text="Titre" />
+               <TableColumn fx:id="auteurColumn" prefWidth="150.0" text="Auteur" />
+               <TableColumn fx:id="categorieColumn" prefWidth="100.0" text="Catégorie" />
+               <TableColumn fx:id="anneeColumn" prefWidth="80.0" text="Année" />
+               <TableColumn fx:id="disponiblesColumn" prefWidth="100.0" text="Disponibles" />
+               <TableColumn fx:id="totalColumn" prefWidth="80.0" text="Total" />
+            </columns>
+         </TableView>
+         
+         <!-- Boutons de navigation -->
+         <HBox alignment="CENTER_RIGHT" spacing="10.0">
+            <Button mnemonicParsing="false" onAction="#handleRetour" text="Retour Accueil" style="-fx-background-color: #95a5a6; -fx-text-fill: white;" />
+         </HBox>
+      </VBox>
+   </center>
+</BorderPane>

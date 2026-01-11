@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base de Données - Bibliothèque Universitaire</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-4">
+            <i class="fas fa-database"></i> 
+            Base de Données Complète
+        </h1>
+        
+        <!-- Statistiques -->
+        <div class="row mb-4" id="statistics">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Étudiants</h5>
+                        <h2 id="totalStudents">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Livres</h5>
+                        <h2 id="totalBooks">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-warning text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Emprunts</h5>
+                        <h2 id="totalLoans">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Livres Disponibles</h5>
+                        <h2 id="availableBooks">0</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Étudiants -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5><i class="fas fa-user-graduate"></i> Étudiants</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="studentsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nom</th>
+                                <th>Prénom</th>
+                                <th>Email</th>
+                                <th>Téléphone</th>
+                                <th>Emprunts Actifs</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Livres -->
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h5><i class="fas fa-book"></i> Livres</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="booksTable">
+                        <thead>
+                            <tr>
+                                <th>ISBN</th>
+                                <th>Titre</th>
+                                <th>Auteur</th>
+                                <th>Catégorie</th>
+                                <th>Année</th>
+                                <th>Disponibles</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emprunts -->
+        <div class="card mb-4">
+            <div class="card-header bg-warning text-white">
+                <h5><i class="fas fa-hand-holding"></i> Emprunts</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="loansTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Étudiant</th>
+                                <th>Livre</th>
+                                <th>Date Emprunt</th>
+                                <th>Date Retour Prévue</th>
+                                <th>Date Retour</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Boutons -->
+        <div class="text-center mb-4">
+            <button class="btn btn-primary me-2" onclick="refreshData()">
+                <i class="fas fa-sync"></i> Actualiser
+            </button>
+            <a href="index.html" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Retour à l'application
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let databaseData = {};
+
+        async function loadDatabase() {
+            try {
+                const response = await fetch('/api/database');
+                databaseData = await response.json();
+                
+                displayStatistics();
+                displayStudents();
+                displayBooks();
+                displayLoans();
+            } catch (error) {
+                console.error('Erreur chargement base de données:', error);
+            }
+        }
+
+        function displayStatistics() {
+            const stats = databaseData.statistics;
+            document.getElementById('totalStudents').textContent = stats.totalStudents;
+            document.getElementById('totalBooks').textContent = stats.totalBooks;
+            document.getElementById('totalLoans').textContent = stats.totalLoans;
+            document.getElementById('availableBooks').textContent = stats.availableBooks;
+        }
+
+        function displayStudents() {
+            const tbody = document.querySelector('#studentsTable tbody');
+            tbody.innerHTML = '';
+            
+            databaseData.students.forEach(student => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.id}</td>
+                    <td>${student.nom}</td>
+                    <td>${student.prenom}</td>
+                    <td>${student.email}</td>
+                    <td>${student.telephone}</td>
+                    <td><span class="badge bg-info">${student.nombreEmpruntsActifs}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function displayBooks() {
+            const tbody = document.querySelector('#booksTable tbody');
+            tbody.innerHTML = '';
+            
+            databaseData.books.forEach(book => {
+                const availabilityClass = book.nombreExemplairesDisponibles > 0 ? 'success' : 'danger';
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${book.isbn}</td>
+                    <td>${book.titre}</td>
+                    <td>${book.auteur}</td>
+                    <td><span class="badge bg-secondary">${book.categorie}</span></td>
+                    <td>${book.anneePublication}</td>
+                    <td><span class="badge bg-${availabilityClass}">${book.nombreExemplairesDisponibles}</span></td>
+                    <td>${book.nombreExemplairesTotal}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function displayLoans() {
+            const tbody = document.querySelector('#loansTable tbody');
+            tbody.innerHTML = '';
+            
+            databaseData.loans.forEach(loan => {
+                const statusClass = loan.statut === 'Actif' ? 'success' : 
+                                   loan.statut === 'Retard' ? 'danger' : 'secondary';
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${loan.id}</td>
+                    <td>${loan.etudiant.prenom} ${loan.etudiant.nom}</td>
+                    <td>${loan.livre.titre}</td>
+                    <td>${loan.dateEmprunt}</td>
+                    <td>${loan.dateRetourPrevue}</td>
+                    <td>${loan.dateRetour || '-'}</td>
+                    <td><span class="badge bg-${statusClass}">${loan.statut}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function refreshData() {
+            loadDatabase();
+        }
+
+        // Charger les données au démarrage
+        document.addEventListener('DOMContentLoaded', loadDatabase);
+
+        // Actualiser automatiquement toutes les 30 secondes
+        setInterval(loadDatabase, 30000);
+    </script>
+</body>
+</html>

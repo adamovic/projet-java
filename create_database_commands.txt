@@ -1,0 +1,61 @@
+COMMANDES POUR CREER LA BASE DE DONNEES MYSQL
+==============================================
+
+OPTION 1 : Via la ligne de commande MySQL (XAMPP)
+--------------------------------------------------
+Ouvrez PowerShell ou CMD et executez :
+
+cd C:\xampp\mysql\bin
+mysql.exe -u root -p < C:\Users\PROBOOK2\Desktop\projet_JAVA\src\main\resources\database.sql
+
+OU si vous etes deja dans le dossier du projet :
+
+C:\xampp\mysql\bin\mysql.exe -u root -p < src\main\resources\database.sql
+
+
+OPTION 2 : Via MySQL en ligne de commande
+-------------------------------------------
+1. Ouvrez PowerShell ou CMD
+2. Naviguez vers le dossier MySQL de XAMPP :
+   cd C:\xampp\mysql\bin
+
+3. Connectez-vous a MySQL :
+   mysql.exe -u root -p
+   (Entrez votre mot de passe, ou appuyez sur Entree si pas de mot de passe)
+
+4. Une fois connecte, executez :
+   source C:/Users/PROBOOK2/Desktop/projet_JAVA/src/main/resources/database.sql
+
+   OU copiez-collez directement le contenu du fichier database.sql
+
+
+OPTION 3 : Via phpMyAdmin (Interface Web)
+------------------------------------------
+1. Ouvrez http://localhost/phpmyadmin
+2. Cliquez sur l'onglet "SQL" en haut
+3. Copiez-collez tout le contenu du fichier database.sql
+4. Cliquez sur "Exécuter" (ou "Go")
+
+
+OPTION 4 : Via phpMyAdmin - Import de fichier
+-----------------------------------------------
+1. Ouvrez http://localhost/phpmyadmin
+2. Cliquez sur "Importer" (ou "Import") dans le menu de gauche
+3. Cliquez sur "Choisir un fichier"
+4. Selectionnez : src\main\resources\database.sql
+5. Cliquez sur "Exécuter" (ou "Go")
+
+
+VERIFICATION
+------------
+Apres execution, verifiez que la base de donnees existe :
+
+Dans MySQL en ligne de commande :
+  SHOW DATABASES;
+  USE bibliotheque_db;
+  SHOW TABLES;
+
+Dans phpMyAdmin :
+  Vous devriez voir "bibliotheque_db" dans la liste des bases de donnees
+  Cliquez dessus et vous verrez 3 tables : etudiants, livres, emprunts
+

@@ -1,0 +1,90 @@
+@startuml Diagramme de Cas d'Utilisation - Gestion de Bibliothèque
+
+left to right direction
+
+actor "Bibliothécaire" as Bibliothecaire
+actor "Étudiant" as Etudiant
+
+rectangle "Système de Gestion de Bibliothèque" {
+    
+    package "Gestion des Étudiants" {
+        usecase "Ajouter un Étudiant" as UC1_1
+        usecase "Modifier un Étudiant" as UC1_2
+        usecase "Supprimer un Étudiant" as UC1_3
+        usecase "Consulter la Liste des Étudiants" as UC1_4
+    }
+    
+    package "Gestion des Livres" {
+        usecase "Ajouter un Livre" as UC2_1
+        usecase "Modifier un Livre" as UC2_2
+        usecase "Supprimer un Livre" as UC2_3
+        usecase "Consulter le Catalogue" as UC2_4
+    }
+    
+    package "Gestion des Emprunts" {
+        usecase "Créer un Emprunt" as UC3_1
+        usecase "Retourner un Livre" as UC3_2
+        usecase "Consulter les Emprunts" as UC3_3
+        usecase "Consulter les Emprunts Actifs" as UC3_4
+        usecase "Consulter les Emprunts en Retard" as UC3_5
+    }
+    
+    package "Recherche de Livres" {
+        usecase "Rechercher par Titre" as UC4_1
+        usecase "Rechercher par Auteur" as UC4_2
+        usecase "Rechercher par ISBN" as UC4_3
+        usecase "Filtrer par Catégorie" as UC4_4
+        usecase "Filtrer par Disponibilité" as UC4_5
+    }
+    
+    package "Statistiques" {
+        usecase "Consulter les Statistiques" as UC5_1
+    }
+}
+
+' Relations Bibliothécaire
+Bibliothecaire --> UC1_1
+Bibliothecaire --> UC1_2
+Bibliothecaire --> UC1_3
+Bibliothecaire --> UC1_4
+Bibliothecaire --> UC2_1
+Bibliothecaire --> UC2_2
+Bibliothecaire --> UC2_3
+Bibliothecaire --> UC2_4
+Bibliothecaire --> UC3_1
+Bibliothecaire --> UC3_2
+Bibliothecaire --> UC3_3
+Bibliothecaire --> UC3_4
+Bibliothecaire --> UC3_5
+Bibliothecaire --> UC4_1
+Bibliothecaire --> UC4_2
+Bibliothecaire --> UC4_3
+Bibliothecaire --> UC4_4
+Bibliothecaire --> UC4_5
+Bibliothecaire --> UC5_1
+
+' Relations Étudiant
+Etudiant --> UC4_1
+Etudiant --> UC4_2
+Etudiant --> UC4_3
+Etudiant --> UC4_4
+Etudiant --> UC4_5
+Etudiant --> UC3_1
+Etudiant --> UC3_2
+
+note right of UC3_1
+  Préconditions:
+  - Livre disponible
+  - Moins de 5 emprunts actifs
+  - Pas d'emprunts en retard
+end note
+
+note right of UC3_2
+  Postconditions:
+  - Livre disponible
+  - Emprunt marqué comme retourné
+end note
+
+@enduml
+
+
